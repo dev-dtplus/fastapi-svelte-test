@@ -29,4 +29,4 @@ app.mount("/assets", StaticFiles(directory="frontend/dist/assets"))
 
 @app.get("/")
 def index():
-    return FileResponse("frontend/dist/index.html")#"frontend_flutter/build/web/index.html"
+    return FileResponse("frontend/dist/index.html")
