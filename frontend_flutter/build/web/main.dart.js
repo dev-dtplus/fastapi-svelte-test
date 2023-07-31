@@ -47781,7 +47781,7 @@ A.pQ.prototype={
 mt(){var s=0,r=A.a3(t.N),q,p,o,n,m
 var $async$mt=A.a4(function(a,b){if(a===1)return A.a0(b,r)
 while(true)switch(s){case 0:s=3
-return A.ab(A.aip(A.kH("http://localhost:8080/api/question/list?page=0&size=10")),$async$mt)
+return A.ab(A.aip(A.kH("http://127.0.0.1:8080/api/question/list?page=0&size=10")),$async$mt)
 case 3:m=b
 A.ny("Response status: "+m.b)
 p=m.e
