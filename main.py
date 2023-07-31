@@ -25,8 +25,8 @@ app.add_middleware(
 app.include_router(question_router.router)
 app.include_router(answer_router.router)
 app.include_router(user_router.router)
-app.mount("/assets", StaticFiles(directory="frontend_flutter/build/web"))
+app.mount("/assets", StaticFiles(directory="frontend/dist/assets"))
 
 @app.get("/")
 def index():
-    return FileResponse("frontend_flutter/build/web/index.html")
+    return FileResponse("frontend/dist/index.html")#"frontend_flutter/build/web/index.html"
