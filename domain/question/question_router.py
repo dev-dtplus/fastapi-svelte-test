@@ -4,7 +4,7 @@ from domain.question import question_schema, question_crud
 from domain.user.user_router import get_current_user
 from models import User
 
-from database import get_db
+from database import get_db, get_async_db
 
 from starlette import status
 #from models import Question
@@ -27,6 +27,12 @@ def question_list(db: Session = Depends(get_db),
         'total': total,
         'question_list': _question_list
     }
+
+
+@router.get("/async_list")
+async def async_question_list(db: Session = Depends(get_async_db)):
+    result = await question_crud.get_async_question_list(db)
+    return result
 
 
 @router.get("/detail/{question_id}", response_model=question_schema.Question)
@@ -84,3 +90,4 @@ def question_vote(_question_vote: question_schema.QuestionVote,
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail="데이터를 찾을수 없습니다.")
     question_crud.vote_question(db, db_question=db_question, db_user=current_user)
+

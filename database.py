@@ -1,5 +1,7 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+
 from sqlalchemy.orm import sessionmaker
 from starlette.config import Config
 
@@ -7,9 +9,18 @@ from starlette.config import Config
 config = Config('.env')
 SQLALCHEMY_DATABASE_URL = config('SQLALCHEMY_DATABASE_URL')
 
+SQLALCHEMY_ASYNC_DATABASE_URL = config('SQLALCHEMY_ASYNC_DATABASE_URL')
+
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
+
+
+async_engine = create_async_engine(SQLALCHEMY_ASYNC_DATABASE_URL)
+
+
+
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
@@ -30,3 +41,11 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+async def get_async_db():
+    db = AsyncSession(bind=async_engine)
+    try:
+        yield db
+    finally:
+        await db.close()

@@ -3,6 +3,7 @@ myapi.db
 __pycache__
 migrations
 alembic.ini
-frontend_flutter
+# frontend_flutter
 requirements_bk.txt
 .env
+venv
