@@ -5,3 +5,4 @@ migrations
 alembic.ini
 frontend_flutter
 requirements_bk.txt
+.env
