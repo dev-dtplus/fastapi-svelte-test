@@ -20970,7 +20970,7 @@ _.b=a
 _.c=null},
 a9h:function a9h(a){this.a=a},
 a9g:function a9g(a){this.a=a},
-a9e:function a9e(){},
+a9e:function a9e(a){this.a=a},
 a9i:function a9i(a){this.a=a},
 a9f:function a9f(a){this.a=a},
 a9j:function a9j(a,b){this.a=a
@@ -67642,13 +67642,12 @@ return A.a0(p.A6(0,"token_type"),$async$$0)
 case 3:s=4
 return A.a0(p.A6(0,"username"),$async$$0)
 case 4:p=q.a
-p.d=""
-p.ap(new A.a9e())
+p.ap(new A.a9e(p))
 return A.W(null,r)}})
 return A.X($async$$0,r)},
 $S:23}
 A.a9e.prototype={
-$0(){},
+$0(){this.a.d=""},
 $S:0}
 A.a9i.prototype={
 $2(a,b){var s,r,q=null,p=b.b
