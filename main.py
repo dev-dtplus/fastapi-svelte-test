@@ -10,6 +10,7 @@ from domain.user import user_router
 app = FastAPI()
 
 origins = [
+    "*",
         #"http://localhost",
         #"http://localhost:80",
         #"http://127.0.0.1",
