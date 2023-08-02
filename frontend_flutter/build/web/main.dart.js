@@ -67467,7 +67467,7 @@ A.mI.prototype={
 rn(a,b){return this.Tu(a,b)},
 Tu(a,b){var s=0,r=A.Y(t.B),q,p,o,n,m,l,k,j
 var $async$rn=A.Z(function(c,d){if(c===1)return A.V(d,r)
-while(true)switch(s){case 0:m=A.iv("http://10.0.1.88:8080/api/user/login")
+while(true)switch(s){case 0:m=A.iv("https://api.gadgetrie.dev/api/user/login")
 l=t.N
 k=A.aj(["Content-Type","application/x-www-form-urlencoded"],l,l)
 s=3
@@ -67540,7 +67540,7 @@ A.mJ.prototype={
 ro(a,b,c,d){return this.Tx(a,b,c,d)},
 Tx(a,b,c,d){var s=0,r=A.Y(t.B),q,p,o,n,m
 var $async$ro=A.Z(function(e,f){if(e===1)return A.V(f,r)
-while(true)switch(s){case 0:p=A.iv("http://35.216.76.241:8080/api/user/create")
+while(true)switch(s){case 0:p=A.iv("https://api.gadgetrie.dev/api/user/create")
 o=t.N
 n=A.aj(["Content-Type","application/json"],o,o)
 s=3
@@ -67600,7 +67600,7 @@ A.mH.prototype={
 rl(){var s=0,r=A.Y(t.N),q,p,o,n,m
 var $async$rl=A.Z(function(a,b){if(a===1)return A.V(b,r)
 while(true)switch(s){case 0:s=3
-return A.a0(A.azG(A.iv("http://35.216.76.241:8080/api/question/list?page=0&size=20")),$async$rl)
+return A.a0(A.azG(A.iv("https://api.gadgetrie.dev/api/question/list?page=0&size=20")),$async$rl)
 case 3:m=b
 A.eS("Response status: "+m.b)
 p=m.e
@@ -67683,7 +67683,7 @@ A.mG.prototype={
 rm(a,b,c){return this.Tt(a,b,c)},
 Tt(a,b,c){var s=0,r=A.Y(t.B),q,p,o,n,m
 var $async$rm=A.Z(function(d,e){if(d===1)return A.V(e,r)
-while(true)switch(s){case 0:p=A.iv("http://35.216.76.241:8080/api/question/create")
+while(true)switch(s){case 0:p=A.iv("https://api.gadgetrie.dev/api/question/create")
 o=t.N
 n=A.aj(["Content-Type","application/json","Authorization","Bearer "+c],o,o)
 s=3
