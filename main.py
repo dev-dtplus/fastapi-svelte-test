@@ -10,12 +10,12 @@ from domain.user import user_router
 app = FastAPI()
 
 origins = [
-        "http://localhost",
-        "http://localhost:80",
-        "http://127.0.0.1",
-        "http://127.0.0.1:80",
-        "http://10.0.1.85",
-        "http://10.0.1.85:80"
+        #"http://localhost",
+        #"http://localhost:80",
+        #"http://127.0.0.1",
+        #"http://127.0.0.1:80",
+        "http://10.0.1.88",
+        "http://10.0.1.88:80"
      #"http://localhost:5173"#"http://127.0.0.1:5173",    # 또는 
 ]
 
