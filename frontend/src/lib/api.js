@@ -23,6 +23,7 @@ const fastapi = (operation, url, params, success_callback, failure_callback) => 
         method: method,
         headers: {
             "Content-Type": content_type
+            
         }
     }
 

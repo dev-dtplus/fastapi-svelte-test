@@ -4254,6 +4254,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 clock
 fake_async
 material_color_utilities
+quiver
 
 
                                  Apache License
@@ -6411,6 +6412,12 @@ SOFTWARE.
 
 --------------------------------------------------------------------------------
 flutter_lints
+google_identity_services_web
+google_sign_in
+google_sign_in_android
+google_sign_in_ios
+google_sign_in_platform_interface
+google_sign_in_web
 plugin_platform_interface
 
 Copyright 2013 The Flutter Authors. All rights reserved.
