@@ -50,17 +50,18 @@ def device_qrcode_create(device_id:int, db: Session = Depends(get_db)):
 
 
 
-flags = {}
+#flags = {}
 
-MESSAGE_STREAM_DELAY = 1
+MESSAGE_STREAM_DELAY = 2
 MESSAGE_STREAM_RETRY_TIMEOUT = 15000
 
 
 
 @router.get('/qrcode/checkstream/{auth_id}')
-async def message_stream(auth_id:int, request: Request):
-    def valid_auth_id():
-        return flags.get(str(auth_id)) is not None
+async def message_stream(auth_id:int, request: Request, db: Session = Depends(get_async_db)):
+    async def valid_auth_id():
+        device, user_id = await device_crud.get_device_and_state_by_auth_id(db, auth_id=auth_id)
+        return user_id is not None #flags.get(str(auth_id)) is not None
         
     async def event_generator():
         while True:
@@ -78,7 +79,7 @@ async def message_stream(auth_id:int, request: Request):
                 }
                 break
 
-            await asyncio.sleep(1)#MESSAGE_STREAM_DELAY
+            await asyncio.sleep(MESSAGE_STREAM_DELAY)
 
     return EventSourceResponse(event_generator())
 
@@ -90,7 +91,7 @@ async def device_qrcode_auth(auth_id: int,db: Session = Depends(get_async_db), c
     if not device:
         raise HTTPException(status_code=404, detail="Auth session not found")
     
-    flags[str(auth_id)] = current_user.id
+    #flags[str(auth_id)] = current_user.id
 
     await device_crud.update_device_auth_user(db=db, db_device=device, user=current_user)
     return {"user":"authenticated"}
