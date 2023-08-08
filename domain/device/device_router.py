@@ -59,8 +59,8 @@ MESSAGE_STREAM_RETRY_TIMEOUT = 15000
 
 @router.get('/qrcode/checkstream/{auth_id}')
 async def message_stream(auth_id:int, request: Request, db: Session = Depends(get_async_db)):
-    async def valid_auth_id():
-        _, user_id = await device_crud.get_device_and_state_by_auth_id(db, auth_id=auth_id)
+    def valid_auth_id():
+        _, user_id = device_crud.get_device_and_state_by_auth_id(db, auth_id=auth_id)
         return user_id is not None #flags.get(str(auth_id)) is not None
         
     async def event_generator():
