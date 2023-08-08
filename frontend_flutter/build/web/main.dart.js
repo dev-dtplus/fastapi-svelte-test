@@ -70829,7 +70829,7 @@ A.NA.prototype={
 K(a){var s=this,r=null,q=A.a2(a).ax,p=q.k2
 q=p==null?q.c:p
 s.a.toString
-return A.I5(A.akM(q,A.qr(A.a([A.dp("Flutter Demo Home Page",r,r,r,r,r,r)],t.F),B.b1,B.hN,B.aK)),new A.ps(s.a.t6(),new A.ac_(s),r,t.jz),A.alW(B.B2,!1,new A.ac0(s,a),"Increment"))}}
+return A.I5(A.akM(q,A.qr(A.a([A.dp("Wakefit Demo Page",r,r,r,r,r,r)],t.F),B.b1,B.hN,B.aK)),new A.ps(s.a.t6(),new A.ac_(s),r,t.jz),A.alW(B.B2,!1,new A.ac0(s,a),"Increment"))}}
 A.ac_.prototype={
 $2(a,b){var s,r,q=null,p=b.b
 if(p==null)return B.yo
