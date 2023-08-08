@@ -70671,7 +70671,7 @@ A.na.prototype={
 t8(a,b){return this.VW(a,b)},
 VW(a,b){var s=0,r=A.O(t.C),q,p,o,n,m
 var $async$t8=A.P(function(c,d){if(c===1)return A.L(d,r)
-while(true)switch(s){case 0:p=A.dT("https://api.gadgetrie.dev/api/user/login")
+while(true)switch(s){case 0:p=A.dT("https://api.gowakefit.com/api/user/login")
 o=t.N
 n=A.al(["Content-Type","application/x-www-form-urlencoded"],o,o)
 s=3
