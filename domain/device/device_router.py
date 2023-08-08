@@ -35,7 +35,7 @@ def device_create(place_id: int, db: Session = Depends(get_db)):
 
 @router.get("/qrcode/update/{device_id}")
 async def device_qrcode_create(device_id:int, db: Session = Depends(get_async_db)):
-    device = device_crud.get_device(db, device_id=device_id)
+    device = await device_crud.get_device(db, device_id=device_id)
     if not device:
         raise HTTPException(status_code=404, detail="Device not found")
     

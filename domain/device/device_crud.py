@@ -24,8 +24,15 @@ def create_device(db: Session,
 # def create_qrcode(db: Session):
 #     return "qrcode"
 
-def get_device(db: Session, device_id: int):
-    return db.query(Device).get(device_id)
+async def get_device(db: Session, device_id: int):
+    query = select(Device).filter(Device.id == device_id)
+    #query = select(Device).get(device_id)
+    db_device = await db.execute(query)
+    db_device = db_device.scalars().first()
+
+    return db_device
+
+    #return db.query(Device).get(device_id)
 
 # async def get_async_question_list(db: Session):
 #     data = await db.execute(select(Question)
