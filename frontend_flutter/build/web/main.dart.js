@@ -70750,7 +70750,7 @@ A.nb.prototype={
 t9(a,b,c,d){return this.VZ(a,b,c,d)},
 VZ(a,b,c,d){var s=0,r=A.O(t.C),q,p,o,n
 var $async$t9=A.P(function(e,f){if(e===1)return A.L(f,r)
-while(true)switch(s){case 0:p=A.dT("https://api.gadgetrie.dev/api/user/create")
+while(true)switch(s){case 0:p=A.dT("https://api.gowakefit.com/api/user/create")
 o=t.N
 n=A.al(["Content-Type","application/json"],o,o)
 s=3
@@ -70809,7 +70809,7 @@ A.n8.prototype={
 t6(){var s=0,r=A.O(t.N),q,p
 var $async$t6=A.P(function(a,b){if(a===1)return A.L(b,r)
 while(true)switch(s){case 0:s=3
-return A.R(A.aDg(A.dT("https://api.gadgetrie.dev/api/question/list?page=0&size=20")),$async$t6)
+return A.R(A.aDg(A.dT("https://api.gowakefit.com/api/question/list?page=0&size=20")),$async$t6)
 case 3:p=b
 q=A.SP(A.SD(p.e).c.a.h(0,"charset")).dl(0,p.w)
 s=1
@@ -70854,7 +70854,7 @@ A.n7.prototype={
 t7(a,b,c){return this.VV(a,b,c)},
 VV(a,b,c){var s=0,r=A.O(t.C),q,p,o,n,m
 var $async$t7=A.P(function(d,e){if(d===1)return A.L(e,r)
-while(true)switch(s){case 0:p=A.dT("https://api.gadgetrie.dev/api/question/create")
+while(true)switch(s){case 0:p=A.dT("https://api.gowakefit.com/api/question/create")
 o=t.N
 n=A.al(["Content-Type","application/json","Authorization","Bearer "+c],o,o)
 s=3
