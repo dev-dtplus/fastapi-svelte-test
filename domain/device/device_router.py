@@ -84,14 +84,26 @@ async def message_stream(auth_id:int, request: Request, db: Session = Depends(ge
     return EventSourceResponse(event_generator())
 
 
+# @router.get("/qrcode/auth/{auth_id}")
+# async def device_qrcode_auth(auth_id: int,db: Session = Depends(get_async_db), current_user: User = Depends(get_current_user)):
+#     device, _ = await device_crud.get_device_and_state_by_auth_id(db, auth_id=auth_id)
+
+#     if not device:
+#         raise HTTPException(status_code=404, detail="Auth session not found")
+    
+#     #flags[str(auth_id)] = current_user.id
+
+#     await device_crud.update_device_auth_user(db=db, db_device=device, user=current_user)
+#     return {"user":"authenticated"}
+
 @router.get("/qrcode/auth/{auth_id}")
-async def device_qrcode_auth(auth_id: int,db: Session = Depends(get_async_db), current_user: User = Depends(get_current_user)):
-    device, _ = await device_crud.get_device_and_state_by_auth_id(db, auth_id=auth_id)
+def device_qrcode_auth(auth_id: int,db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    device, _ = device_crud.get_device_and_state_by_auth_id(db, auth_id=auth_id)
 
     if not device:
         raise HTTPException(status_code=404, detail="Auth session not found")
     
     #flags[str(auth_id)] = current_user.id
 
-    await device_crud.update_device_auth_user(db=db, db_device=device, user=current_user)
+    device_crud.update_device_auth_user(db=db, db_device=device, user=current_user)
     return {"user":"authenticated"}
