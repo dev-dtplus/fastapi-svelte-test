@@ -43,7 +43,7 @@ def device_qrcode_create(device_id:int, db: Session = Depends(get_db)):
 
     device_crud.update_device_auth_id(db=db, db_device=device, auth_id=auth_id)
 
-    flags[str(auth_id)] = None
+    #flags[str(auth_id)] = None
 
     return {"auth_id":str(auth_id)}
 
