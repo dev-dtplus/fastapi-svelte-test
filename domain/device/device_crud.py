@@ -50,7 +50,7 @@ async def get_device_and_state_by_auth_id(db: Session, auth_id: int):
         #print(db_device.user_id)
         user_id = db_device.user_id
 
-    return db_device, user_id
+    return db_device, None#user_id
 
 
 async def update_device_auth_id(db: Session,
