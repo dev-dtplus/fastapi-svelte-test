@@ -46,14 +46,15 @@ async def get_device_and_state_by_auth_id(db: Session, auth_id: int):
     return db_device, user_id
 
 
-def update_device_auth_id(db: Session,
+async def update_device_auth_id(db: Session,
                     db_device: Device,
                     auth_id: int):
     
     db_device.auth_id = auth_id
     db_device.user_id = None
+
     db.add(db_device)
-    db.commit()
+    await db.commit()
 
 async def update_device_auth_user(db: Session,
                     db_device: Device,
