@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from keyvalue_sqlite import KeyValueSqlite
 
 from sqlalchemy.orm import sessionmaker
 from starlette.config import Config
@@ -11,12 +12,18 @@ SQLALCHEMY_DATABASE_URL = config('SQLALCHEMY_DATABASE_URL')
 
 SQLALCHEMY_ASYNC_DATABASE_URL = config('SQLALCHEMY_ASYNC_DATABASE_URL')
 
+DB_PATH = config('DB_PATH')
+
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
 
 
 async_engine = create_async_engine(SQLALCHEMY_ASYNC_DATABASE_URL)
+
+#DB_PATH = '/path/to/db.sqlite'
+
+akv_db = KeyValueSqlite(DB_PATH, 'auth_key_value')
 
 
 

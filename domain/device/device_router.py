@@ -7,19 +7,14 @@ from models import User
 import time
 
 import asyncio
-from database import get_db, get_async_db, async_engine
+from database import get_db, get_async_db, async_engine, akv_db
 from sqlalchemy.ext.asyncio import AsyncSession
-from keyvalue_sqlite import KeyValueSqlite
-
-DB_PATH = '/path/to/db.sqlite'
-
-kv_db = KeyValueSqlite(DB_PATH, 'table-name')
 
 from starlette import status
 
 import random
 
-from sse_starlette.sse import EventSourceResponse
+#from sse_starlette.sse import EventSourceResponse
 #from models import Question
 
 router = APIRouter(
@@ -62,7 +57,7 @@ async def device_qrcode_auth(auth_id: int,db: Session = Depends(get_async_db), c
     if not device:
         raise HTTPException(status_code=404, detail="Auth session not found")
     
-    kv_db.set_default(str(auth_id), str(current_user.id))
+    akv_db.set_default(str(auth_id), str(current_user.id))
 
     #flags[str(auth_id)] = current_user.id
 
@@ -77,10 +72,10 @@ async def longpolling(auth_id:int):
     user_id = None
 
     while True:
-        user_id = kv_db.get(str(auth_id))
+        user_id = akv_db.get(str(auth_id))
         if user_id is not None:
             break
         await asyncio.sleep(1)
 
-    kv_db.remove(str(auth_id))
+    akv_db.remove(str(auth_id))
     return {"user_id":user_id}
