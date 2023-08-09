@@ -7,7 +7,13 @@ from models import User
 import time
 
 import asyncio
-from database import get_db, get_async_db
+from database import get_db, get_async_db, async_engine
+from sqlalchemy.ext.asyncio import AsyncSession
+from keyvalue_sqlite import KeyValueSqlite
+
+DB_PATH = '/path/to/db.sqlite'
+
+kv_db = KeyValueSqlite(DB_PATH, 'table-name')
 
 from starlette import status
 
@@ -49,61 +55,32 @@ async def device_qrcode_create(device_id:int, db: Session = Depends(get_async_db
 
 
 
-
-#flags = {}
-
-MESSAGE_STREAM_DELAY = 2
-MESSAGE_STREAM_RETRY_TIMEOUT = 15000
-
-
-
-@router.get('/qrcode/checkstream/{auth_id}')
-async def message_stream(auth_id:int, request: Request, db: Session = Depends(get_async_db)):
-    def valid_auth_id():
-        _, user_id = device_crud.get_device_and_state_by_auth_id(db, auth_id=auth_id)
-        return user_id is not None #flags.get(str(auth_id)) is not None
-        
-    async def event_generator():
-        while True:
-            # If client was closed the connection
-            if await request.is_disconnected():
-                break
-
-            # Checks for new messages and return them to client if any
-            if valid_auth_id():
-                yield {
-                        "event": "auth success",
-                        "id": "auth_id",
-                        "retry": MESSAGE_STREAM_RETRY_TIMEOUT,
-                        "data": "message_content"
-                }
-                break
-
-            await asyncio.sleep(MESSAGE_STREAM_DELAY)
-
-    return EventSourceResponse(event_generator())
-
-
-# @router.get("/qrcode/auth/{auth_id}")
-# async def device_qrcode_auth(auth_id: int,db: Session = Depends(get_async_db), current_user: User = Depends(get_current_user)):
-#     device, _ = await device_crud.get_device_and_state_by_auth_id(db, auth_id=auth_id)
-
-#     if not device:
-#         raise HTTPException(status_code=404, detail="Auth session not found")
-    
-#     #flags[str(auth_id)] = current_user.id
-
-#     await device_crud.update_device_auth_user(db=db, db_device=device, user=current_user)
-#     return {"user":"authenticated"}
-
 @router.get("/qrcode/auth/{auth_id}")
-def device_qrcode_auth(auth_id: int,db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    device, _ = device_crud.get_device_and_state_by_auth_id(db, auth_id=auth_id)
+async def device_qrcode_auth(auth_id: int,db: Session = Depends(get_async_db), current_user: User = Depends(get_current_user)):
+    device = await device_crud.get_device_by_auth_id(db, auth_id=auth_id)
 
     if not device:
         raise HTTPException(status_code=404, detail="Auth session not found")
     
+    kv_db.set_default(str(auth_id), str(current_user.id))
+
     #flags[str(auth_id)] = current_user.id
 
-    device_crud.update_device_auth_user(db=db, db_device=device, user=current_user)
+    await device_crud.update_device_auth_user(db=db, db_device=device, user=current_user)
     return {"user":"authenticated"}
+
+
+
+
+@router.get('/qrcode/longpolling/{auth_id}')
+async def longpolling(auth_id:int):
+    user_id = None
+
+    while True:
+        user_id = kv_db.get(str(auth_id))
+        if user_id is not None:
+            break
+        await asyncio.sleep(1)
+
+    kv_db.remove(str(auth_id))
+    return {"user_id":user_id}

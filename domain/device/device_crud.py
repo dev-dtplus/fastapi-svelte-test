@@ -40,17 +40,13 @@ async def get_device(db: Session, device_id: int):
 #                             .limit(10))
 #     return data.all()
 
-def get_device_and_state_by_auth_id(db: Session, auth_id: int):
-    # query = select(Device).filter(Device.auth_id == auth_id)
-    # db_device = await db.execute(query)
-    # db_device = db_device.scalars().first()
-    db_device = db.query(Device).filter(Device.auth_id == auth_id).first()
-    user_id = None
-    if db_device:
-        #print(db_device.user_id)
-        user_id = db_device.user_id
+async def get_device_by_auth_id(db: Session, auth_id: int):
+    query = select(Device).filter(Device.auth_id == auth_id)
+    db_device = await db.execute(query)
+    db_device = db_device.scalar_one()
+    # db_device = db.query(Device).filter(Device.auth_id == auth_id).first()
 
-    return db_device, user_id
+    return db_device
 
 
 async def update_device_auth_id(db: Session,
@@ -63,10 +59,10 @@ async def update_device_auth_id(db: Session,
     db.add(db_device)
     await db.commit()
 
-def update_device_auth_user(db: Session,
+async def update_device_auth_user(db: Session,
                     db_device: Device,
                     user: User):
     
     db_device.user_id = user.id
     db.add(db_device)
-    db.commit()
+    await db.commit()
