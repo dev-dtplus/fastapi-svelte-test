@@ -9,4 +9,5 @@ python-jose[cryptography]==3.3.*
 aiosqlite
 gunicorn
 sse-starlette
-keyvalue-sqlite
+#keyvalue-sqlite
+redis
