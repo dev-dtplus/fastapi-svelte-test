@@ -7,7 +7,7 @@ from models import User
 import time
 
 import asyncio
-from database import get_db, get_async_db, async_engine, akv_db
+from database import get_db, get_async_db, async_engine, redis_config
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from starlette import status
@@ -57,7 +57,10 @@ async def device_qrcode_auth(auth_id: int,db: Session = Depends(get_async_db), c
     if not device:
         raise HTTPException(status_code=404, detail="Auth session not found")
     
-    akv_db.set_default(str(auth_id), str(current_user.id))
+    #akv_db.set_default(str(auth_id), str(current_user.id))
+    rd = redis_config()
+
+    rd.set(str(auth_id), str(current_user.id))
 
     #flags[str(auth_id)] = current_user.id
 
@@ -70,12 +73,14 @@ async def device_qrcode_auth(auth_id: int,db: Session = Depends(get_async_db), c
 @router.get('/qrcode/longpolling/{auth_id}')
 async def longpolling(auth_id:int):
     user_id = None
+    rd = redis_config()
 
     while True:
-        user_id = akv_db.get(str(auth_id))
+
+        user_id = rd.get(str(auth_id))
         if user_id is not None:
             break
         await asyncio.sleep(1)
 
-    akv_db.remove(str(auth_id))
+    rd.delete(str(auth_id))
     return {"user_id":user_id}

@@ -5,6 +5,9 @@ from keyvalue_sqlite import KeyValueSqlite
 
 from sqlalchemy.orm import sessionmaker
 from starlette.config import Config
+import os
+from dotenv import load_dotenv
+import redis
 
 
 config = Config('.env')
@@ -17,6 +20,21 @@ DB_PATH = config('DB_PATH')
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
+
+
+def redis_config() :
+    try:
+        REDIS_HOST = config("REDIS_HOST")
+        REDIS_PORT = int(config("REDIS_PORT"))
+        REDIS_DATABASE = int(config("REDIS_DATABASE"))
+        return redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DATABASE)
+        # redis.StrictRedis( ... ) 라고도 사용할 수 있다
+        # Python의 버전이 3으로 업데이트 되면서 함수명이 변경되었다
+        # 하지만 버전 호환을 위해 StrictRedis로도 연결을 할 수 있다
+        # 즉, Redis = StrictRedis로 동일한 기능을 하는 함수이다
+		
+    except:
+        print("redis connection failure")
 
 
 async_engine = create_async_engine(SQLALCHEMY_ASYNC_DATABASE_URL)
